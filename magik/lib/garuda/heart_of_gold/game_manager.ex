@@ -4,6 +4,9 @@ defmodule Garuda.HeartOfGold.GameManager do
   """
 
   alias Garuda.HeartOfGold.RoomSupervisor
+  alias Garuda.Goblet.MatchmakerSupervisor
+  alias Garuda.Orwell.MonitorSupervisor
+
   use Supervisor
 
   def start_link(init_arg) do
@@ -14,6 +17,8 @@ defmodule Garuda.HeartOfGold.GameManager do
     children = [
       # {DynamicSupervisor, strategy: :one_for_one, name: ClickerSupervisor},
       Supervisor.child_spec(RoomSupervisor, type: :supervisor),
+      Supervisor.child_spec(MatchmakerSupervisor, type: :supervisor),
+      Supervisor.child_spec(MonitorSupervisor, type: :supervisor)
     ]
     Supervisor.init(children, strategy: :one_for_one)
   end

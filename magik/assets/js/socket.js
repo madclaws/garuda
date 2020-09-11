@@ -53,25 +53,56 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 //
 // Finally, connect to the socket:
 socket.connect()
+/* 
+  What we do in Star
+
+  the topic name will be the matchmaker roomlist name, here clicker.
+  we have to create a unique id for player (like gzpid) and pass.
+  This uid, will be saved in players socket as socket.assigns.uid.
+
+  When a match is found, the data will be broadcasted to garuda_matchmaker:<room> (here clicker)
+  there we send only to those gzpid's that are in the data, Refer STAR.
+
+*/
+
+// garuda.join("clicker", {matchid: ""}); // actual kinda api
+
+
+let matchmaker_channel = socket.channel("garuda_matchmaker:clicker", {})
+matchmaker_channel.join()
+  .receive("ok", resp => onMatchmakerLobbyJoin(resp))
+  .receive("error", resp => {console.log("unable to join matchmaker")});
 
 // Now that you are connected, you can join channels with a topic:
 let rand_topicOffset = Math.floor(Math.random() * 1000);
-let channel = socket.channel("room_clicker:xyz" + rand_topicOffset, {})
-let gameover = false;
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+let channel; 
 
-window.addEventListener("click", () => {
-  if (!gameover) {
-    channel.push("click");
-  }
-});
 
-channel.on("over", (msg) => {
-  gameover = true;
-  console.log(msg);
-  alert("Total clicks => " + msg["click"]);
-});
+
+function onMatchmakerLobbyJoin(resp) {
+  console.log("onMatchmakerLobbyJoin -> resp", resp)
+  console.log("yepee got matchid", resp["matchid"]);
+  onGotMatch(resp["matchid"])
+}
+
+function onGotMatch(matchid) {
+  channel = socket.channel("room_clicker:" + matchid + rand_topicOffset, {})
+  let gameover = false;
+  channel.join()
+   .receive("ok", resp => { console.log("Joined successfully", resp) })
+   .receive("error", resp => { console.log("Unable to join", resp) })
+
+   channel.on("over", (msg) => {
+    gameover = true;
+    console.log(msg);
+    alert("Total clicks => " + msg["click"]);
+  });
+
+  window.addEventListener("click", () => {
+    if (!gameover) {
+      channel.push("click");
+    }
+  });
+}
 
 export default socket
