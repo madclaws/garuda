@@ -4,8 +4,7 @@ defmodule MagikWeb.UserSocket do
   ## Channels
   # channel "room:*", MagikWeb.RoomChannel
 
-  # channel "clicker:*", MagikWeb.ClickerChannel
-  game_channel "clicker", MagikWeb.ClickerChannel
+  game_channel "clicker", MagikWeb.ClickerChannel, Magik.ClickRoom
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

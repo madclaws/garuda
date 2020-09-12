@@ -1,18 +1,15 @@
 defmodule MagikWeb.ClickerChannel do
 
   use Phoenix.Channel
-  use GarudaPoc.GameChannel
-
-  alias GarudaPoc.GameRoom
+  use Garuda.Framework.GameChannel
   alias Magik.ClickRoom
 
-  @impl GarudaPoc.GameChannel
-  def create(_params, socket) do
+  @impl true
+  def on_join(_params, _socket) do
     IO.puts("Fucker joined Clicker")
-    GameRoom.createRoom(ClickRoom, socket.assigns.match_id)
   end
 
-  @impl GarudaPoc.GameChannel
+  @impl true
   def authorized?(_params) do
     true
   end
@@ -20,13 +17,13 @@ defmodule MagikWeb.ClickerChannel do
   @impl true
   def handle_in("click", _message, socket) do
     IO.puts("clicking")
-    ClickRoom.on_click(:xyz)
+    ClickRoom.on_click(id(socket))
     {:noreply, socket}
   end
 
   @impl true
-  def terminate(_reason, socket) do
-    GarudaPoc.HeartOfGold.RoomDb.on_channel_terminate(socket.channel_pid)
+  def on_leave(reason, _socket) do
+    IO.puts("Leaving clicker channel due to #{inspect reason}, bye")
   end
 
 end

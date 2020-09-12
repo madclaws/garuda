@@ -2,11 +2,11 @@ defmodule Magik.ClickRoom do
 
   use GenServer, restart: :transient
 
-  alias GarudaPoc.HeartOfGold.RoomSheduler
+  alias Garuda.RoomManager.RoomSheduler
   def start_link(name: name, opts: opts) do
-    result = GenServer.start_link(__MODULE__, opts, name: String.to_atom(name))
+    result = GenServer.start_link(__MODULE__, opts, name: name)
     case result do
-      {:ok, child} -> Process.send_after(RoomSheduler, {:room_started, child}, 10)
+      {:ok, child} -> Process.send_after(RoomSheduler, {:room_started, child, opts}, 10)
       _ -> true
     end
     result
@@ -16,9 +16,13 @@ defmodule Magik.ClickRoom do
     GenServer.cast(pid, "click")
   end
 
+  def on_leave(pid) do
+    GenServer.cast(pid, "leave")
+  end
+
   @impl true
-  def init(_opts) do
-    IO.puts("Inited Clicker room")
+  def init(opts) do
+    IO.puts("Inited Clicker room => #{inspect opts}")
     Process.send_after(self(), {"tick", 0}, 1000)
     {:ok, %{"clicks" => 0, "ticks" => 0}}
   end
@@ -48,8 +52,5 @@ defmodule Magik.ClickRoom do
     {:noreply, state}
   end
 
-  @impl true
-  def terminate(reason, state) do
 
-  end
 end
