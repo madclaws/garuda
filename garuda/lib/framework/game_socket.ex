@@ -15,9 +15,10 @@ defmodule Garuda.Framework.GameSocket do
 
     Expects a user specified game room name and associated module
   """
-  defmacro game_channel(channel_name, channel_module) do
+  defmacro game_channel(channel_name, channel_module, game_room_module) do
     quote do
-      Phoenix.Socket.channel "room_" <> unquote(channel_name) <> ":*", unquote(channel_module)
+      Phoenix.Socket.channel "room_" <> unquote(channel_name) <> ":*", unquote(channel_module),
+      assigns: %{game_room_module: unquote(game_room_module)}
     end
   end
 

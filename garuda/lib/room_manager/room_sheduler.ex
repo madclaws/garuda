@@ -10,6 +10,7 @@ defmodule Garuda.RoomManager.RoomSheduler do
   """
 
   use GenServer
+  alias Garuda.RoomManager.Records
   alias Garuda.RoomManager.RoomDb
   def start_link(opts \\ []) do
     GenServer.start_link(__MODULE__, opts, name: __MODULE__)
@@ -52,11 +53,12 @@ defmodule Garuda.RoomManager.RoomSheduler do
   end
 
   @impl true
-  def handle_info({:room_started, pid}, state) do
+  def handle_info({:room_started, pid, opts}, state) do
     IO.puts("room started #{inspect pid}")
     # Handles the creation of a game room, by adding it to the RoomDb.
-    room_name = Keyword.get(Process.info(pid), :registered_name)
-    add_room_to_state(pid, room_name)
+    game_room_id = Keyword.get(opts, :game_room_id)
+    [room_name, room_id] = String.split(game_room_id, ":")
+    add_room_to_state(pid, room_name, room_id)
     {:noreply, state}
   end
 
@@ -111,7 +113,7 @@ defmodule Garuda.RoomManager.RoomSheduler do
   # TODO => Has to revisit after doing the game room abstractions
   defp create_game_room(module, name, opts, state) do
     {supervisor, state} = get_available_supervisor(state)
-    result = DynamicSupervisor.start_child(supervisor, {module, name: name, opts: opts})
+    result = DynamicSupervisor.start_child(supervisor, {module, name: Records.via_tuple(name), opts: opts})
     case result do
       {:ok, _child} -> IO.puts("Room #{name} created")
                       {:ok, state}
@@ -125,9 +127,9 @@ defmodule Garuda.RoomManager.RoomSheduler do
   end
 
   # Monitors the game room and save the room state to RoomDb.
-  defp add_room_to_state(room_pid, room_name) do
+  defp add_room_to_state(room_pid, room_name, room_id) do
     ref = Process.monitor(room_pid)
-    RoomDb.save_room_state(room_pid, %{"ref" => ref, "room_name" => room_name, "time" =>  :os.system_time(:milli_seconds)
+    RoomDb.save_room_state(room_pid, %{"ref" => ref, "room_name" => room_name, "room_id" => room_id, "time" =>  :os.system_time(:milli_seconds)
     })
   end
 

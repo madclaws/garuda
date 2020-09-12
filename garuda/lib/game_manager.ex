@@ -14,6 +14,7 @@ defmodule Garuda.GameManager do
   def init(_init_arg) do
     children = [
       Supervisor.child_spec(RoomSupervisor, type: :supervisor),
+      {Registry, keys: :unique, name: GarudaRegistry}
     ]
     Supervisor.init(children, strategy: :one_for_one)
   end
