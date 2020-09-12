@@ -1,11 +1,11 @@
-defmodule Garuda.HeartOfGold.GameManager do
+defmodule GarudaPoc.HeartOfGold.GameManager do
   @moduledoc """
     This is heart of gold, supervises all process.
   """
 
-  alias Garuda.HeartOfGold.RoomSupervisor
-  alias Garuda.Goblet.MatchmakerSupervisor
-  alias Garuda.Orwell.MonitorSupervisor
+  alias GarudaPoc.HeartOfGold.RoomSupervisor
+  alias GarudaPoc.Goblet.MatchmakerSupervisor
+  alias GarudaPoc.Orwell.MonitorSupervisor
 
   use Supervisor
 

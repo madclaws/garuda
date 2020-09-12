@@ -1,4 +1,7 @@
-defmodule Garuda.Goblet.MatchmakerChannel do
+defmodule Garuda.Matchmaker.Channel do
+  @moduledoc """
+    Handles the matchmaking event from the client.
+  """
   use Phoenix.Channel
 
   @impl true

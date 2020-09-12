@@ -1,4 +1,4 @@
-defmodule Garuda.HeartOfGold.RoomSheduler do
+defmodule GarudaPoc.HeartOfGold.RoomSheduler do
   @moduledoc """
     Manages all the game rooms that are created.
     Will be the bridge between the rooms and other core components
@@ -6,7 +6,7 @@ defmodule Garuda.HeartOfGold.RoomSheduler do
   """
 
   use GenServer
-  alias Garuda.HeartOfGold.RoomDb
+  alias GarudaPoc.HeartOfGold.RoomDb
   def start_link(opts \\ []) do
     GenServer.start_link(__MODULE__, opts, name: __MODULE__)
   end
@@ -66,7 +66,7 @@ defmodule Garuda.HeartOfGold.RoomSheduler do
   end
 
   defp get_dyn_sup_list() do
-      Supervisor.which_children(Garuda.HeartOfGold.RoomSupervisor)
+      Supervisor.which_children(GarudaPoc.HeartOfGold.RoomSupervisor)
       |> Enum.filter(fn {_name, _pid, type, _module} -> type == :supervisor end)
       |> Enum.map(fn {name, _pid, _type, _module} -> name end)
   end

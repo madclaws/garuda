@@ -1,12 +1,12 @@
-defmodule Garuda.HeartOfGold.RoomSupervisor do
+defmodule GarudaPoc.HeartOfGold.RoomSupervisor do
   @moduledoc """
     Creates and supervises all the dynamic supervisors, which in turn
     supervises the actual game rooms.
   """
 
   use Supervisor
-  alias Garuda.HeartOfGold.RoomSheduler
-  alias Garuda.HeartOfGold.RoomDb
+  alias GarudaPoc.HeartOfGold.RoomSheduler
+  alias GarudaPoc.HeartOfGold.RoomDb
 
   @max_dynamic_supervisor 5
 

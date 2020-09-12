@@ -1,4 +1,4 @@
-defmodule Garuda.HeartOfGold.RoomDb do
+defmodule GarudaPoc.HeartOfGold.RoomDb do
   @moduledoc """
     Stores the info of all the game rooms and functions to manage them
   """

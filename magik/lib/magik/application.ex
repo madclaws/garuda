@@ -4,7 +4,6 @@ defmodule Magik.Application do
   @moduledoc false
 
   use Application
-  alias Garuda.HeartOfGold.GameManager
   def start(_type, _args) do
     children = [
       # Start the Telemetry supervisor
@@ -13,7 +12,7 @@ defmodule Magik.Application do
       {Phoenix.PubSub, name: Magik.PubSub},
       # Start the Endpoint (http/https)
       MagikWeb.Endpoint,
-      GameManager
+      Garuda.GameManager
       # {DynamicSupervisor, strategy: :one_for_one, name: MagikWeb.ClickerSupervisor}
       # Start a worker by calling: Magik.Worker.start_link(arg)
       # {Magik.Worker, arg}

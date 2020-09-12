@@ -1,4 +1,4 @@
-defmodule Garuda.Goblet.MatchmakerSupervisor do
+defmodule GarudaPoc.Goblet.MatchmakerSupervisor do
 
   use Supervisor
 

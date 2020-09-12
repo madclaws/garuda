@@ -80,6 +80,7 @@ let channel;
 
 
 function onMatchmakerLobbyJoin(resp) {
+  matchmaker_channel.leave();
   console.log("onMatchmakerLobbyJoin -> resp", resp)
   console.log("yepee got matchid", resp["matchid"]);
   onGotMatch(resp["matchid"])

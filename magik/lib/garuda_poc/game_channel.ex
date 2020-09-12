@@ -1,4 +1,4 @@
-defmodule Garuda.GameChannel do
+defmodule GarudaPoc.GameChannel do
   @moduledoc """
     Includes Phoenix Channels abstractions and game specific functions
   """
@@ -10,7 +10,7 @@ defmodule Garuda.GameChannel do
     quote do
       @behaviour unquote(__MODULE__)
       import unquote(__MODULE__)
-      alias Garuda.HeartOfGold.RoomDb
+      alias GarudaPoc.HeartOfGold.RoomDb
       def join("room_" <> room_id , params, socket) do
         if (apply(__MODULE__, :authorized?, [params])) do
           Process.send_after(self(), {"after_join", params}, 50)

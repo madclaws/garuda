@@ -1,6 +1,6 @@
 defmodule MagikWeb.UserSocket do
   use Phoenix.Socket
-  use Garuda.GameSocket
+  use Garuda.Framework.GameSocket
   ## Channels
   # channel "room:*", MagikWeb.RoomChannel
 

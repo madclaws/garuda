@@ -1,4 +1,4 @@
-defmodule Garuda.Orwell.MonitorSupervisor do
+defmodule GarudaPoc.Orwell.MonitorSupervisor do
 
   use Supervisor
 

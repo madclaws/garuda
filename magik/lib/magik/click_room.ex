@@ -2,7 +2,7 @@ defmodule Magik.ClickRoom do
 
   use GenServer, restart: :transient
 
-  alias Garuda.HeartOfGold.RoomSheduler
+  alias GarudaPoc.HeartOfGold.RoomSheduler
   def start_link(name: name, opts: opts) do
     result = GenServer.start_link(__MODULE__, opts, name: String.to_atom(name))
     case result do
