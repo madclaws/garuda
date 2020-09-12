@@ -1,5 +1,8 @@
 /* This file is for your main application css. */
+@charset "utf-8";
 @import "./phoenix.css";
+@import "../node_modules/nprogress/nprogress.css";
+@import "../node_modules/bulma/bulma.sass";
 
 /* Alerts and form errors */
 .alert {
@@ -33,4 +36,74 @@
   color: #a94442;
   display: block;
   margin: -1rem 0 2rem;
+}
+.orwell-navbar{
+  background-color: #f3de8a;
+  margin-bottom: 10px;
+}
+.brand-text{
+  font-size: 30px;
+  color: #274a66;
+}
+.dashboard-nav{
+  
+}
+.dashboard-content{
+  max-width: 90%;
+  min-width: 90%;
+  // border: 1px solid blue;
+  margin: auto;
+}
+.dashboard-head-columns{
+  width: 100%;
+  margin: auto;
+  border-bottom: 1px solid #0b253c;
+  border-bottom-left-radius: 20px;
+  // margin-bottom: 5px;
+}
+.dashboard-head-column{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.dashboard-columns{
+  width: 100%;
+  margin: auto;
+  border-left: 8px solid #002642;
+  // border-bottom: 1px solid black;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  height: 100%;
+  align-items: center;
+}
+.dashboard-column{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  line-height: 100%;
+  text-align: center;
+}
+.pre-block{
+  margin-top: 0;
+  border-bottom: 1px solid #002642;
+  border-left: 1px solid #002642;
+  border-bottom-left-radius: 20px;
+  margin-bottom: 10px;
+}
+.code-block{
+  text-align: left;
+  // border-left: 1px solid red;
+}
+.test-div{
+  margin-left: 10px;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
