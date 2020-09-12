@@ -90,7 +90,7 @@ function onGotMatch(matchid) {
   channel = socket.channel("room_clicker:" + matchid + rand_topicOffset, {})
   let gameover = false;
   channel.join()
-   .receive("ok", resp => { console.log("Joined successfully", resp) })
+   .receive("ok", resp => { gameover = false; console.log("Joined successfully", resp) })
    .receive("error", resp => { console.log("Unable to join", resp) })
 
    channel.on("over", (msg) => {

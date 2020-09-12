@@ -1,4 +1,4 @@
-defmodule Garuda.Framework.GameChannel do
+defmodule Garuda.GameChannel do
   @moduledoc """
     Phoenix Channels abstractions, game specific behaviours and functions
   """
@@ -10,6 +10,7 @@ defmodule Garuda.Framework.GameChannel do
     quote do
       @behaviour unquote(__MODULE__)
       import unquote(__MODULE__)
+      use Phoenix.Channel
       alias Garuda.RoomManager.RoomDb
       alias Garuda.RoomManager.RoomSheduler
       def join("room_" <> room_id , params, socket) do

@@ -37,8 +37,8 @@ defmodule Garuda.RoomManager.RoomSheduler do
 
   @impl true
   def handle_call({:create_room, module, room_name, opts}, _from, state) do
-    {result, state} = create_game_room(module, room_name, opts, state)
-    {:reply, result, state}
+    state = create_game_room(module, room_name, opts, state)
+    {:reply, state, state}
   end
 
   # TODO => Remove comments.
@@ -61,6 +61,16 @@ defmodule Garuda.RoomManager.RoomSheduler do
     add_room_to_state(pid, room_name, room_id)
     {:noreply, state}
   end
+
+  # @impl true
+  # def handle_info({:room_join, pid, opts}, state) do
+  #   IO.puts("joined room #{inspect pid}")
+  #   # Handles the creation of a game room, by adding it to the RoomDb.
+  #   game_room_id = Keyword.get(opts, :game_room_id)
+  #   [room_name, room_id] = String.split(game_room_id, ":")
+  #   add_room_to_state(pid, room_name, room_id)
+  #   {:noreply, state}
+  # end
 
   # Creates an initial state for sheduler
   defp generate_sheduler_state() do
@@ -113,17 +123,8 @@ defmodule Garuda.RoomManager.RoomSheduler do
   # TODO => Has to revisit after doing the game room abstractions
   defp create_game_room(module, name, opts, state) do
     {supervisor, state} = get_available_supervisor(state)
-    result = DynamicSupervisor.start_child(supervisor, {module, name: Records.via_tuple(name), opts: opts})
-    case result do
-      {:ok, _child} -> IO.puts("Room #{name} created")
-                      {:ok, state}
-      {:error, {:already_started, _child}} -> IO.puts("Already created")
-                                              {:ok, state}
-      {:error, error} -> IO.puts("Failed due to #{inspect error}")
-                         {{:error, error}, state}
-      _ -> IO.puts("Error")
-            {:error, state}
-    end
+    DynamicSupervisor.start_child(supervisor, {module, name: Records.via_tuple(name), opts: opts})
+    state
   end
 
   # Monitors the game room and save the room state to RoomDb.
@@ -132,5 +133,9 @@ defmodule Garuda.RoomManager.RoomSheduler do
     RoomDb.save_room_state(room_pid, %{"ref" => ref, "room_name" => room_name, "room_id" => room_id, "time" =>  :os.system_time(:milli_seconds)
     })
   end
+
+  # defp update_room(room_pid) do
+  #   RoomDb.
+  # end
 
 end

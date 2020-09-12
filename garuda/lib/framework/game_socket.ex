@@ -1,4 +1,4 @@
-defmodule Garuda.Framework.GameSocket do
+defmodule Garuda.GameSocket do
   @moduledoc """
     Injects specific game behaviours in user_socket.ex
   """
@@ -6,6 +6,7 @@ defmodule Garuda.Framework.GameSocket do
   defmacro __using__(_opts \\ []) do
     quote do
       import unquote(__MODULE__)
+      use Phoenix.Socket
       Phoenix.Socket.channel "garuda_matchmaker:*", Garuda.Matchmaker.Channel
     end
   end

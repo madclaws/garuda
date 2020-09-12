@@ -39,7 +39,7 @@ defmodule Magik.MixProject do
       {:phoenix_live_dashboard, "~> 0.2"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
-      {:garuda, path: "/mnt/white_dwarf/Labs/garuda/garuda"},
+      {:garuda, path: "../garuda"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"}

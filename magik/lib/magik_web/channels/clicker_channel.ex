@@ -1,7 +1,6 @@
 defmodule MagikWeb.ClickerChannel do
 
-  use Phoenix.Channel
-  use Garuda.Framework.GameChannel
+  use Garuda.GameChannel
   alias Magik.ClickRoom
 
   @impl true

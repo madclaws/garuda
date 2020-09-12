@@ -1,8 +1,5 @@
 defmodule MagikWeb.UserSocket do
-  use Phoenix.Socket
-  use Garuda.Framework.GameSocket
-  ## Channels
-  # channel "room:*", MagikWeb.RoomChannel
+  use Garuda.GameSocket
 
   game_channel "clicker", MagikWeb.ClickerChannel, Magik.ClickRoom
 

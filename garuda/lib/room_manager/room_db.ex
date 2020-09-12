@@ -18,6 +18,13 @@ defmodule Garuda.RoomManager.RoomDb do
     GenServer.cast(__MODULE__, {:save_room, {room_pid, info}})
   end
 
+  def update_room_state(room_pid) do
+    GenServer.cast(__MODULE__, {:update_room, room_pid})
+  end
+
+  def get_channel_name(pid) do
+    GenServer.call(__MODULE__, {:get_channel_name, pid})
+  end
   @doc """
     Deletes a game room info
 
@@ -69,7 +76,7 @@ defmodule Garuda.RoomManager.RoomDb do
   end
 
   @impl true
-  def handle_cast({:channel_conn, channel_pid}, state) do
+  def handle_cast({:channel_conn, {channel_pid, _info}}, state) do
     IO.puts("on channel conn #{inspect channel_pid}")
     state = put_in state["conn"][channel_pid], %{}
     {:noreply, state}
@@ -92,4 +99,10 @@ defmodule Garuda.RoomManager.RoomDb do
     {:reply, stats, state}
   end
 
+  @impl true
+  def handle_call({:get_channel_name, room_pid}, _from, state) do
+    room_name = state["rooms"][room_pid]["room_name"]
+    room_id = state["rooms"][room_pid]["room_id"]
+    {:reply, "room_" <> room_name <> ":" <> room_id, state}
+  end
 end

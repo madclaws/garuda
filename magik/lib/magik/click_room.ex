@@ -1,16 +1,6 @@
 defmodule Magik.ClickRoom do
 
-  use GenServer, restart: :transient
-
-  alias Garuda.RoomManager.RoomSheduler
-  def start_link(name: name, opts: opts) do
-    result = GenServer.start_link(__MODULE__, opts, name: name)
-    case result do
-      {:ok, child} -> Process.send_after(RoomSheduler, {:room_started, child, opts}, 10)
-      _ -> true
-    end
-    result
-  end
+  use Garuda.GameRoom
 
   def on_click(pid) do
     GenServer.cast(pid, "click")
@@ -38,11 +28,11 @@ defmodule Magik.ClickRoom do
   end
 
   @impl true
-  def handle_info({"tick", 60}, state) do
+  def handle_info({"tick", 10}, state) do
     IO.puts("Gameover #{inspect state}")
-    # MagikWeb.Endpoint.broadcast!("room_clicker:" <> state["id"], "over", %{click: state["clicks"]})
-    # {:stop, {:shutdown, "Room closing due to gameover"}, state}
-    {:noreply, state}
+    MagikWeb.Endpoint.broadcast!(get_channel(), "over", %{click: state["clicks"]})
+    {:stop, {:shutdown, "Room closing due to gameover"}, state}
+    # {:noreply, state}
   end
 
   @impl true
