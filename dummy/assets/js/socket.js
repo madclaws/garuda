@@ -68,26 +68,43 @@ socket.connect()
 // garuda.join("clicker", {matchid: ""}); // actual kinda api
 
 
-let matchmaker_channel = socket.channel("garuda_matchmaker:clicker", {})
+// without matchid
+let matchmaker_channel = socket.channel("garuda_matchmaker:clicker:2", {
+  player_count: 2, 
+  player_id: String(Math.floor(Math.random()*100)),
+  room_name: "garuda_matchmaker:clicker:2",
+})
+
+/* let matchid = "BX_YZ";
+let matchmaker_channel = socket.channel("garuda_matchmaker:" + matchid + ":clicker:3", {
+  player_count: 3, 
+  player_id: String(Math.floor(Math.random()*100)),
+  room_name: "garuda_matchmaker:" + matchid + ":clicker:3",
+  match_id: matchid,
+}); */
+
 matchmaker_channel.join()
-  .receive("ok", resp => onMatchmakerLobbyJoin(resp))
+  .receive("ok", resp => {console.log("joined matchmaker")})
   .receive("error", resp => {console.log("unable to join matchmaker")});
+
+  matchmaker_channel.on("match_maker_event", (message) => {
+    console.log("DSB: message", message);
+    OnMatchMade(message)
+  })
 
 // Now that you are connected, you can join channels with a topic:
 let rand_topicOffset = Math.floor(Math.random() * 1000);
 let channel; 
 
-
-
-function onMatchmakerLobbyJoin(resp) {
+function OnMatchMade(resp) {
   matchmaker_channel.leave();
   console.log("onMatchmakerLobbyJoin -> resp", resp)
-  console.log("yepee got matchid", resp["matchid"]);
-  onGotMatch(resp["matchid"])
+  console.log("yepee got matchid", resp["match_id"]);
+  onGotMatch(resp["match_id"])
 }
 
 function onGotMatch(matchid) {
-  channel = socket.channel("room_clicker:" + matchid + rand_topicOffset, {})
+  channel = socket.channel("room_clicker:" + matchid, {})
   let gameover = false;
   channel.join()
    .receive("ok", resp => { gameover = false; console.log("Joined successfully", resp) })

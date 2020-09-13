@@ -7,7 +7,7 @@ defmodule Garuda.GameSocket do
     quote do
       import unquote(__MODULE__)
       use Phoenix.Socket
-      Phoenix.Socket.channel "garuda_matchmaker:*", Garuda.Matchmaker.Channel
+      Phoenix.Socket.channel "garuda_matchmaker:*", Garuda.Matchmaker.MatchmakerChannel
     end
   end
 

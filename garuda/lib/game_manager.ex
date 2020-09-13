@@ -3,8 +3,7 @@ defmodule Garuda.GameManager do
     Entry point supervisor of Garuda
   """
   alias Garuda.RoomManager.RoomSupervisor
-  # alias GarudaPoc.Goblet.MatchmakerSupervisor
-  # alias GarudaPoc.Orwell.MonitorSupervisor
+  alias Garuda.Matchmaker.MatchmakerSupervisor
 
   use Supervisor
   def start_link(init_arg) do
@@ -14,6 +13,7 @@ defmodule Garuda.GameManager do
   def init(_init_arg) do
     children = [
       Supervisor.child_spec(RoomSupervisor, type: :supervisor),
+      Supervisor.child_spec(MatchmakerSupervisor, type: :supervisor),
       {Registry, keys: :unique, name: GarudaRegistry}
     ]
     Supervisor.init(children, strategy: :one_for_one)
