@@ -25,7 +25,8 @@
             <div class="column is-one-third dashboard-column">
                 <button class="button is-rounded is-primary"
                     phx-click="inspect"
-                    phx-value-id="<%= room["room_name"] %>" >
+                    phx-value-name="<%= room["room_name"] %>"
+                    phx-value-id="<%= room["room_id"] %>">
                     Inspect
                 </button>
                 <button class="button is-rounded is-danger"
@@ -35,7 +36,7 @@
                 </button>
             </div>
         </div>
-        <%= if @selected_room == room["room_name"] do %>
+        <%= if @selected_room == room["room_id"] do %>
         <div>
             <pre class="pre-block">
                 <code class="code-block">

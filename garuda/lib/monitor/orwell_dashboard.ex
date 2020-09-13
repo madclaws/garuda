@@ -14,8 +14,8 @@ defmodule Garuda.Monitor.OrwellDashboard do
   """
   use Phoenix.LiveView
   require Logger
-  require Garuda.Monitor.DashboardData
-
+  alias Garuda.Monitor.DashboardData
+  alias Garuda.RoomManager.RoomDb
   @doc """
     The Mount function gathers information from Game Server and creates liveview template
     This function also sends an :update event to self, after 10 seconds
@@ -26,10 +26,10 @@ defmodule Garuda.Monitor.OrwellDashboard do
     Logger.info "==============Running MOUNT ==================="
 
     #Sending event to self to poll gameserver data
-    # Process.send_after(self(), :update, 10000)
+    Process.send_after(self(), :update, 10_000)
 
     # Get data from Game Manager
-    game_manager_data = Garuda.Monitor.DashboardData.getdata
+    game_manager_data = RoomDb.get_stats()
 
     #assigning number of room, connections, and a list of room info to socket
     #selected_room to show inspect section
@@ -58,12 +58,12 @@ defmodule Garuda.Monitor.OrwellDashboard do
     ##set :selected room as the one from event
 
     # String.to_atom(params["id"])
-    socket = assign(socket, :selected_room, String.to_atom(params["id"]))
-
+    game_room_id = params["name"] <> ":" <> params["id"]
+    socket = assign(socket, :selected_room, params["id"])
     Logger.info "#{inspect(socket.assigns)}"
 
     ## Also assign the state of that room
-    socket = assign(socket, :room_state, OrwellWeb.DashboardData.getRoomstate("pid 112") |> stateToString )
+    socket = assign(socket, :room_state, DashboardData.getRoomstate(game_room_id) |> stateToString )
     Logger.info "#{inspect(socket.assigns)}"
 
     {:noreply, socket}
@@ -84,12 +84,15 @@ defmodule Garuda.Monitor.OrwellDashboard do
   """
   def handle_info(:update, socket) do
     #send event to self, to continously poll the game server data
-    Process.send_after(self(), :update, 10000)
+    Process.send_after(self(), :update, 10_000)
 
+    game_manager_data = RoomDb.get_stats()
     Logger.info("=================UPDATE============")
     Logger.info("#{inspect(socket.assigns)}")
 
-    {:noreply, socket}
+    {:noreply, assign(socket, :connections, game_manager_data["num_conns"] ) |>
+    assign(:num_rooms, game_manager_data["num_rooms"]) |>
+    assign(:list_rooms, game_manager_data["rooms"] |> makeListRooms)}
   end
 
   # defp getTimeDiff( room_map ) do

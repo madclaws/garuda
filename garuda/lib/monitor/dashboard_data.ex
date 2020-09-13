@@ -1,5 +1,5 @@
 defmodule Garuda.Monitor.DashboardData do
-
+alias Garuda.RoomManager.Records
   def getdata do
     %{
       "num_conns" => 2,
@@ -19,8 +19,8 @@ defmodule Garuda.Monitor.DashboardData do
     }
   end
 
-  def getRoomstate( roomPID) do
-    {:ok, result} = getdata()["rooms"] |> Map.fetch(roomPID)
+  def getRoomstate(room_pid) do
+    result = :sys.get_state(Records.via_tuple(room_pid))
     result
   end
 
