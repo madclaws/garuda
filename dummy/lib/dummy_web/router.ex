@@ -1,5 +1,6 @@
 defmodule DummyWeb.Router do
   use DummyWeb, :router
+  use Garuda.Monitor
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -14,11 +15,11 @@ defmodule DummyWeb.Router do
   end
 
 
-  scope "/" do
-    pipe_through :browser
-    live "/test", Garuda.Monitor.OrwellDashboard
-    # live "/", PageLive, :index
-  end
+  # scope "/" do
+  #   pipe_through :browser
+  #   live "/test", Garuda.Monitor.OrwellDashboard
+  #   # live "/", PageLive, :index
+  # end
 
   scope "/", DummyWeb do
     pipe_through :browser
