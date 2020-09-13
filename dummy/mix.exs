@@ -35,10 +35,10 @@ defmodule Dummy.MixProject do
     [
       {:phoenix, "~> 1.5.4"},
       {:phoenix_ecto, "~> 4.1"},
-      {:garuda, path: "../garuda"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_view, "~> 0.14.4"},
+      {:garuda, git: "https://github.com/spawnfest/garuda.git", branch: "develop"},
       {:floki, ">= 0.0.0", only: :test},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
