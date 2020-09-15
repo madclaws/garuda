@@ -1,0 +1,7 @@
+gamezop.gameInit({
+matchId: "b1",
+players: [
+    	{gzpId: "32Oq9",firstName: "dibyanshu", photo: "https://static.gamezop.com/users/32Oq9-pic.png?v=102"},
+	{gzpId: "J2",firstName: "prabodh", photo: "https://static.gamezop.com/users/J2-pic.png?v=102"},
+	{gzpId: "Pw",firstName: "anandu", photo: "https://static.gamezop.com/users/Pw-pic.png?v=102"},
+]})
