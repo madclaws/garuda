@@ -1,5 +1,0 @@
-Garuda Todo.
-  |> Apis for Broadcasting messages from a room to the channel.
-  |> Handling errors on creating rooms.
-  |> "A behaviour module for implementing game channels." -> for doc of magik systems
-  |> Using Registry for naming Rooms.
