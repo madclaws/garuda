@@ -25,13 +25,13 @@ export default class Menu extends Phaser.Scene{
 
 
         let _bg = this.add.sprite(GameWidth * 0.5, GameHeight * 0.5, "menubg").setOrigin(0.5);
-        let _title = this.add.bitmapText(GameWidth * 0.5, GameHeight * 0.3, FONT_FILES.BOTTOM_BOX_NUMBER_UN_SELECT, "TIC TAC TOE").setOrigin(0.5)
+        let _title = this.add.bitmapText(GameWidth * 0.5, GameHeight * 0.2, FONT_FILES.BOTTOM_BOX_NUMBER_UN_SELECT, "TIC TAC TOE").setOrigin(0.5)
     }
 
     private setupButtons(){
         let _this = this;
 
-        let findMatchBtn = this.add.sprite(GameWidth * 0.5,GameHeight * 0.7 ,"btn_up").setOrigin(0.5);
+        let findMatchBtn = this.add.sprite(GameWidth * 0.5,GameHeight * 0.85 ,"btn_up").setOrigin(0.5);
         findMatchBtn.setOrigin(0.5);
         findMatchBtn.setInteractive();
         let findMatchBtnText = this.add.bitmapText(findMatchBtn.x, findMatchBtn.y, FONT_FILES.TIMER_FONT, "FIND MATCH").setOrigin(0.5)
