@@ -38,7 +38,6 @@ export class NetworkManager{
     }
 
     private onMatchMade(gameChannel, message) {
-        console.log("DSB: NetworkManager -> onMatchMade -> message", message);
         console.log("DSB: NetworkManager -> onMatchMade -> gameChannel", gameChannel);
 
         NetworkManager.getInstance().gameChannel = gameChannel
@@ -48,13 +47,12 @@ export class NetworkManager{
             gameChannel.join()
                 .receive("ok", resp => { 
                     console.log("Joined successfully", resp)
-                    NetworkManager.getInstance().sendToServer({
-                        event: "add_player",
-                        message: {player_id: PlayerData.getInstance().getPlayerData.player_id} 
-                    })
                 })
                 .receive("error", resp => { console.log("Unable to join", resp) })
-
+            gameChannel.on("start", message =>{
+            console.log("DSB: NetworkManager -> onMatchMade -> message", message);
+                Lobby.instance.startGame(message.players)
+            })
             gameChannel.on("moved", message =>{
                 console.log("---------------------DSB: NetworkManager -> onMatchMade -> message", message);
                 let playerId = message.player_id

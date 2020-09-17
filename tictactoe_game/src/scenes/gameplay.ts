@@ -7,20 +7,25 @@ import { NetworkManager } from '../manager/network_manager';
 
 export default class Gameplay extends Phaser.Scene{
     private currentTurnText: Phaser.GameObjects.BitmapText
+    private gameoverButtonContainer: Phaser.GameObjects.Container
     private cellList: Cell[];
     public static instance: Gameplay
+    private goToHomeButton: Phaser.GameObjects.Sprite
     public constructor(){
         super({key: "gameplay"});
     }
 
     public init(){
         Gameplay.instance = this
+        this.cellList = []
+        GameManager.getInstance().setGameOver(false)
     }
 
     public create(){
         this.setupBackground()
         this.setUpGameBoard()
         this.showCurrentTurn()
+        this.setUpButtons()
     }
 
     private setupBackground(){
@@ -86,20 +91,8 @@ export default class Gameplay extends Phaser.Scene{
             GameManager.getInstance().setMatchWon(0)
         }
 
-        // let goToMenuBtn = this.add.sprite(GameWidth * 0.5,GameHeight * 0.85 ,"btn_up").setOrigin(0.5);
-        // goToMenuBtn.setOrigin(0.5);
-        // goToMenuBtn.setInteractive();
-        // let goToMenuBtnText = this.add.bitmapText(goToMenuBtn.x, goToMenuBtn.y, FONT_FILES.TIMER_FONT, "HOME").setOrigin(0.5)
-        // goToMenuBtn.on("pointerdown", (pointer, x, y, event) => {
-        //     goToMenuBtn.setTexture("btn_down")
-        //     goToMenuBtnText.y = goToMenuBtn.y + 10
-        // })
-        // goToMenuBtn.on("pointerup",(pointer,x,y,event)=>{
-        //     goToMenuBtn.setTexture("btn_up")
-        //     goToMenuBtnText.y = goToMenuBtn.y
-        //     this.scene.start("menu");
-        //     this.scene.stop("gameplay");
-        // })
+        this.gameoverButtonContainer.setVisible(true)
+       
     }
 
     private showCurrentTurn(){
@@ -109,6 +102,29 @@ export default class Gameplay extends Phaser.Scene{
             FONT_FILES.BOTTOM_BOX_NUMBER_UN_SELECT, 
             GameManager.getInstance().getTurnText()
             ).setOrigin(0.5)
+    }
+
+    private setUpButtons(){
+        this.gameoverButtonContainer = this.add.container(0,0)
+        this.goToHomeButton = this.add.sprite(GameWidth * 0.5,GameHeight * 0.85 ,"btn_up").setOrigin(0.5);
+        this.goToHomeButton.setOrigin(0.5);
+        this.goToHomeButton.setInteractive();
+        let goToHomeButtonText = this.add.bitmapText(this.goToHomeButton.x, this.goToHomeButton.y, FONT_FILES.TIMER_FONT, "HOME").setOrigin(0.5)
+        this.goToHomeButton.on("pointerdown", (pointer, x, y, event) => {
+            if(!this.goToHomeButton.visible) return
+            this.goToHomeButton.setTexture("btn_down")
+            goToHomeButtonText.y = this.goToHomeButton.y + 10
+        })
+        this.goToHomeButton.on("pointerup",(pointer,x,y,event)=>{
+            if(!this.goToHomeButton.visible) return
+            this.goToHomeButton.setTexture("btn_up")
+            goToHomeButtonText.y = this.goToHomeButton.y
+            this.scene.start("menu");
+            this.scene.stop("gameplay");
+        })
+        this.gameoverButtonContainer.add(this.goToHomeButton)
+        this.gameoverButtonContainer.add(goToHomeButtonText)
+        this.gameoverButtonContainer.setVisible(false)
     }
 
     public update(){
