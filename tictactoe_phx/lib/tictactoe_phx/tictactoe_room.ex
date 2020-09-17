@@ -71,6 +71,7 @@ defmodule TictactoePhx.TictactoeRoom do
     end
 
     defp update_player_list([player1], game_state, user_id) do
+      TictactoePhxWeb.Endpoint.broadcast!(get_channel(), "start", %{players: [player1, user_id]})
       %{game_state | player_list: [player1, user_id]}
     end
 
