@@ -47,6 +47,10 @@ export class NetworkManager{
             gameChannel.join()
                 .receive("ok", resp => { 
                     console.log("Joined successfully", resp)
+                    NetworkManager.getInstance().sendToServer({
+                        event: "add_player",
+                        message: {player_id: PlayerData.getInstance().getPlayerData.player_id} 
+                    })
                 })
                 .receive("error", resp => { console.log("Unable to join", resp) })
             gameChannel.on("start", message =>{

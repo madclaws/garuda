@@ -17,7 +17,7 @@ defmodule TictactoePhxWeb.TictactoeChannel do
 
   @impl true
   def handle_in("add_player", message, socket) do
-    Logger.info("#{inspect(message)}")
+    Logger.info("adding player -- #{inspect(message)}")
     player_id = message["player_id"]
     TictactoeRoom.add_player(id(socket), player_id)
     {:noreply, socket}

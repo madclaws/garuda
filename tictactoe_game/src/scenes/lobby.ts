@@ -57,10 +57,10 @@ export default class Lobby extends Phaser.Scene{
             if(!this.startGameButton.visible) return
             if(this.addPlayer) return
             this.addPlayer = true
-            NetworkManager.getInstance().sendToServer({
-                event: "add_player",
-                message: {player_id: PlayerData.getInstance().getPlayerData.player_id} 
-            })
+            // NetworkManager.getInstance().sendToServer({
+            //     event: "add_player",
+            //     message: {player_id: PlayerData.getInstance().getPlayerData.player_id} 
+            // })
         })
         this.startGameButtonContainer.add(this.startGameButton)
         this.startGameButtonContainer.add(startGameButtonText)
