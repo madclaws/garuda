@@ -44,8 +44,8 @@ defmodule TictactoePhx.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      # {:garuda, git: "git@github.com:madclaws/garuda.git", branch: "bugfix"},
-      {:garuda, path: "../../temp/garuda"},
+      {:garuda, git: "git@github.com:madclaws/garuda.git", branch: "bugfix"},
+      # {:garuda, path: "../../temp/garuda"},
     ]
   end
 
