@@ -141,7 +141,7 @@ defmodule Garuda.Matchmaker.MatchmakerFunction do
   end
 
   defp is_room_open?(room_name) do
-    room_population = room_name |> getmap_players_in_room() |> IO.inspect()
+    room_population = room_name |> getmap_players_in_room()
 
     case Enum.count(room_population) do
       0 -> false
@@ -179,7 +179,6 @@ defmodule Garuda.Matchmaker.MatchmakerFunction do
 
   # puts the first player in the players map
   defp put_player_in_room([], player_details, m_default()) do
-    IO.puts("-----------making new room")
     player_id = player_details["player_id"]
     game_room = player_details["room_name"]
     match_id = player_details["match_id"] || ""
@@ -196,7 +195,6 @@ defmodule Garuda.Matchmaker.MatchmakerFunction do
   # - is player already in map ?
   # - will map reach its population limit if player is added ?
   defp put_player_in_room(map_players_in_room, player_details, m_default()) do
-    IO.puts("-----------joining to an old room")
     player_id = player_details["player_id"]
     player_count = player_details["player_count"]
     players_in_room_count = map_players_in_room |> Map.keys() |> Enum.count()
@@ -235,7 +233,6 @@ defmodule Garuda.Matchmaker.MatchmakerFunction do
   defp put_player_in_room(map_players_in_room, player_details, m_join()) do
     player_id = player_details["player_id"]
     # search for player with non-negative player count
-    IO.puts("match data #{inspect(map_players_in_room)}")
 
     player_count =
       map_players_in_room
@@ -259,7 +256,6 @@ defmodule Garuda.Matchmaker.MatchmakerFunction do
   end
 
   defp put_player_in_room(_map_players_in_room, _player_details, _mode) do
-    IO.puts("-----------is this hapenning??!!")
     nil
   end
 
