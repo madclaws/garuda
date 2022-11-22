@@ -1,3 +1,7 @@
+**WARNING: This Repo is archived, development is now at [https://github.com/gamezop/garuda](https://github.com/gamezop/garuda)**
+
+
+
 ![garuda logo](assets/garuda_title.png?raw=true  "title")
 
 # Garuda
@@ -6,7 +10,7 @@
 
 > Build and run game servers intuitively.
 
-  
+
 
 ![Garuda CI](https://github.com/madclaws/garuda/workflows/Garuda%20CI/badge.svg)
 
